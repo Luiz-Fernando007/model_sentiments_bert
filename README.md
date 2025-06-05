@@ -1,98 +1,64 @@
-# 🧠 Emollama - Classificador de Emoções com LLM
+# 🤖 Classificador de Sentimentos com BERT
 
-Este repositório contém uma implementação simples e prática de um modelo baseado em LLaMA para **análise de emoções em textos**.  
-Você poderá rodá-lo localmente com o modelo `Emollama-7b` usando a ferramenta [Ollama](https://ollama.com).
-
----
+Este projeto utiliza um modelo BERT treinado para classificar textos em diferentes sentimentos, como Frustração, Satisfação, Confusão, Neutro, Urgência e Raiva.
 
 ## 🚀 Como rodar
 
 ### ✅ Requisitos
 
-Certifique-se de ter instalado:
+- Python 3.8+
+- PyTorch
+- Transformers (`pip install transformers`)
+- GPU (opcional, mas recomendado para desempenho)
 
-- Python 3.10 ou superior
-- [Git](https://git-scm.com/)
-- [VS Code](https://code.visualstudio.com/) (ou outra IDE de sua preferência)
-- [Ollama](https://ollama.com) (executando em segundo plano)
-- transformers
-- torch
-- accelerate
-- sentencepiece
+### 📦 Instalando dependências
 
-Além disso, instale as dependências do Python:
+No terminal, execute:
 
-```bash
-pip install transformers torch accelerate sentencepiece
+```sh
+pip install torch transformers
 ```
-
----
-
-### 📦 Clonando o repositório
-
-```bash
-git clone https://github.com/Lual007/Modelo_Sentimentos_Emollama.git
-cd Modelo_Sentimentos_Emollama
-```
-
----
-
-### 🧠 Instalando e iniciando o Ollama
-
-1. Baixe o instalador no site: https://ollama.com
-2. Instale normalmente conforme o seu sistema.
-3. **Execute o Ollama.**
-   - No Windows, procure por "Ollama" no menu iniciar.
-   - Ele roda em segundo plano. Verifique no **Gerenciador de Tarefas** se está ativo.
-4. Agora abra o terminal e rode:
-
-```bash
-ollama pull lzw1008/Emollama-7b
-```
-
-> Esse comando faz o download do modelo que será usado localmente.
-
----
 
 ### ▶️ Executando o código
 
-Abra o terminal na pasta do projeto e execute o script `main.py`, ou use o seguinte exemplo básico em um script Python:
+1. Certifique-se de que a pasta `app/modelo_sentimentos` contém os arquivos do modelo treinado (incluindo `config.json`, `pytorch_model.bin`, `vocab.txt`).
+2. No terminal, execute um script Python ou use o exemplo abaixo:
 
 ```python
-from transformers import LlamaTokenizer, LlamaForCausalLM
+from app.models import analise_sentimento
 
-tokenizer = LlamaTokenizer.from_pretrained('lzw1008/Emollama-7b')
-model = LlamaForCausalLM.from_pretrained('lzw1008/Emollama-7b', device_map='auto')
+texto = "Seu texto para análise aqui."
+sentimento = analise_sentimento(texto)
+print("Sentimento identificado:", sentimento)
+```
 
-entrada = """
-Humano:
-Tarefa: Categorize o tom emocional do texto como 'neutro ou sem emoção' ou identifique a 
-presença de uma ou mais das emoções fornecidas (raiva, ansiedade, nojo, medo, alegria, 
-amor, otimismo, pessimismo, tristeza, surpresa, confiança).
-Texto: Qualquer coisa que você decida fazer tenha a certeza de que isso te faz feliz.  
-Esse texto apresenta as emoções:
+Você verá no terminal se o CUDA está disponível e qual dispositivo está sendo usado.
 
-Assistente:
-"""
+### 🌐 Suporte ao Português
 
+O modelo foi treinado para compreender textos em **português**.
+
+---
+
+## 📁 Estrutura do Projeto
+
+- `app/models.py`: Função principal para análise de sentimentos.
+- `app/modelo_sentimentos/`: Diretório com o modelo BERT treinado.
+- `README.md`: Este arquivo.
+
+---
+
+## 📝 Exemplo de Saída
+
+```sh
+CUDA disponível? True
+Dispositivo: NVIDIA GeForce RTX 3060
+Sentimento identificado: Satisfação
 ```
 
 ---
 
-### 🌐 Suporte ao Português
-
-Embora o prompt original esteja em inglês, o modelo suporta entradas em **português** sem problemas.
-
----
-
-### 📁 Estrutura do Projeto
-
-- `modelo.py`: Código principal que executa o modelo.
-- `README.md`: Este arquivo com instruções completas.
-
----
-
-### 📬 Contato
+## 📬 Contato
 
 Contribuições, sugestões ou dúvidas são bem-vindas!  
 Abra uma issue ou entre em contato diretamente pelo GitHub.
